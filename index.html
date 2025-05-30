@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>YTMavi - YouTube Downloader</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.8rem;
+            color: #ff3c00;
+            margin-bottom: 5px;
+            letter-spacing: 3px;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: #bbb;
+        }
+        main {
+            width: 100%;
+            max-width: 520px;
+            background: #1f1f1f;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(255, 60, 0, 0.3);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #ff3c00;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            background: #2c2c2c;
+            color: #eee;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+        input[type="text"]:focus {
+            background: #3e3e3e;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background: #ff3c00;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #e63900;
+        }
+        .result {
+            margin-top: 30px;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+        .result h3 {
+            color: #ff6f3c;
+            margin-bottom: 15px;
+        }
+        .quality-list {
+            list-style: none;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-left: 0;
+        }
+        .quality-list li {
+            margin-bottom: 10px;
+        }
+        .quality-list button {
+            background: #444;
+            color: #eee;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .quality-list button:hover {
+            background: #ff3c00;
+            color: white;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #555;
+            text-align: center;
+        }
+        @media(max-width: 600px) {
+            main {
+                padding: 20px 15px;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>YTMavi Downloader</h1>
+    <p>Paste YouTube URL below to get download options</p>
+</header>
+
+<main>
+    <label for="videoURL">YouTube Video URL:</label>
+    <input type="text" id="videoURL" placeholder="https://www.youtube.com/watch?v=example" />
+    <button id="fetchBtn">Get Download Options</button>
+
+    <div class="result" id="result">
+        <h3>Available Qualities:</h3>
+        <ul class="quality-list" id="qualityList"></ul>
+    </div>
+</main>
+
+<footer>
+    <p>© 2025 AMS Lab | Developed by Ameer Muawiya</p>
+</footer>
+
+<script>
+    const fetchBtn = document.getElementById('fetchBtn');
+    const resultDiv = document.getElementById('result');
+    const qualityList = document.getElementById('qualityList');
+    const videoURL = document.getElementById('videoURL');
+
+    fetchBtn.addEventListener('click', () => {
+        const url = videoURL.value.trim();
+        if (!url) {
+            alert('Please enter a valid YouTube URL!');
+            return;
+        }
+
+        // Clear previous results
+        qualityList.innerHTML = '';
+        resultDiv.style.display = 'none';
+
+        // Normally here you would call your backend API to get download options,
+        // but since this is a static example, we'll simulate options:
+
+        // Simulated data - replace this with your real API call
+        const simulatedQualities = [
+            {quality: '1080p', size: '100MB', url: '#'},
+            {quality: '720p', size: '70MB', url: '#'},
+            {quality: '480p', size: '40MB', url: '#'},
+            {quality: '360p', size: '25MB', url: '#'}
+        ];
+
+        simulatedQualities.forEach(item => {
+            const li = document.createElement('li');
+            const btn = document.createElement('button');
+            btn.textContent = `${item.quality} - ${item.size}`;
+            btn.onclick = () => {
+                alert(`You clicked download for ${item.quality}`);
+                // Here you will trigger the actual download using item.url
+            };
+            li.appendChild(btn);
+            qualityList.appendChild(li);
+        });
+
+        resultDiv.style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
