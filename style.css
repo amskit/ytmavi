@@ -1,8 +1,11 @@
 /* Basic Reset */
 * {
-    margin: 0; padding: 0; box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 body {
     background: #121212;
     color: #e0e0e0;
@@ -13,20 +16,24 @@ body {
     min-height: 100vh;
     padding: 20px;
 }
+
 header {
     margin-bottom: 30px;
     text-align: center;
 }
+
 header h1 {
     font-size: 2.8rem;
     color: #ff3c00;
     margin-bottom: 5px;
     letter-spacing: 3px;
 }
+
 header p {
     font-size: 1.2rem;
     color: #bbb;
 }
+
 main {
     width: 100%;
     max-width: 520px;
@@ -35,6 +42,7 @@ main {
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(255, 60, 0, 0.3);
 }
+
 label {
     display: block;
     margin-bottom: 10px;
@@ -42,6 +50,7 @@ label {
     font-size: 1.1rem;
     color: #ff3c00;
 }
+
 input[type="text"] {
     width: 100%;
     padding: 12px 15px;
@@ -53,9 +62,11 @@ input[type="text"] {
     outline: none;
     transition: background 0.3s ease;
 }
+
 input[type="text"]:focus {
     background: #3e3e3e;
 }
+
 button {
     margin-top: 20px;
     width: 100%;
@@ -69,9 +80,11 @@ button {
     cursor: pointer;
     transition: background 0.3s ease;
 }
+
 button:hover {
     background: #e63900;
 }
+
 .result {
     margin-top: 30px;
     background: #2a2a2a;
@@ -79,19 +92,25 @@ button:hover {
     border-radius: 8px;
     display: none;
 }
+
 .result h3 {
     color: #ff6f3c;
     margin-bottom: 15px;
 }
+
+/* Quality list container styling */
 .quality-list {
     list-style: none;
     max-height: 180px;
     overflow-y: auto;
     padding-left: 0;
 }
+
 .quality-list li {
     margin-bottom: 10px;
 }
+
+/* Quality button styling */
 .quality-list button {
     background: #444;
     color: #eee;
@@ -101,16 +120,21 @@ button:hover {
     cursor: pointer;
     transition: background 0.2s ease;
 }
+
 .quality-list button:hover {
     background: #ff3c00;
     color: white;
 }
+
+/* Footer styling */
 footer {
     margin-top: 40px;
     font-size: 0.9rem;
     color: #555;
     text-align: center;
 }
+
+/* Responsive design for smaller screens */
 @media(max-width: 600px) {
     main {
         padding: 20px 15px;
