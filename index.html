@@ -8,23 +8,25 @@
 </head>
 <body>
 
-<header>
+<header class="header">
     <h1>YTMavi Downloader</h1>
-    <p>Paste YouTube URL below to get download options</p>
+    <p class="subheading">Paste YouTube URL below to get download options</p>
 </header>
 
-<main>
-    <label for="videoURL">YouTube Video URL:</label>
-    <input type="text" id="videoURL" placeholder="https://www.youtube.com/watch?v=example" />
-    <button id="fetchBtn">Get Download Options</button>
+<main class="main-content">
+    <div class="input-group">
+        <label for="videoURL">YouTube Video URL:</label>
+        <input type="text" id="videoURL" placeholder="https://www.youtube.com/watch?v=example" />
+        <button id="fetchBtn">Get Download Options</button>
+    </div>
 
-    <div class="result" id="result">
+    <div class="result" id="result" style="display: none;">
         <h3>Available Qualities:</h3>
         <ul class="quality-list" id="qualityList"></ul>
     </div>
 </main>
 
-<footer>
+<footer class="footer">
     <p>© 2025 AMS Lab | Developed by Ameer Muawiya</p>
 </footer>
 
@@ -45,10 +47,7 @@
         qualityList.innerHTML = '';
         resultDiv.style.display = 'none';
 
-        // Normally here you would call your backend API to get download options,
-        // but since this is a static example, we'll simulate options:
-
-        // Simulated data - replace this with your real API call
+        // Simulated data (Replace with actual API call in future)
         const simulatedQualities = [
             {quality: '1080p', size: '100MB', url: '#'},
             {quality: '720p', size: '70MB', url: '#'},
@@ -59,10 +58,11 @@
         simulatedQualities.forEach(item => {
             const li = document.createElement('li');
             const btn = document.createElement('button');
+            btn.className = 'quality-button';
             btn.textContent = `${item.quality} - ${item.size}`;
             btn.onclick = () => {
                 alert(`You clicked download for ${item.quality}`);
-                // Here you will trigger the actual download using item.url
+                // Actual download logic goes here using item.url
             };
             li.appendChild(btn);
             qualityList.appendChild(li);
