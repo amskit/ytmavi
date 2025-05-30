@@ -1,54 +1,48 @@
-# app.py
+# backend/app.py
+
 from flask import Flask, request, jsonify
+from yt_dlp import YoutubeDL
 from flask_cors import CORS
-import yt_dlp
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend to access backend (CORS enabled)
+CORS(app)
 
-@app.route('/api/download-options', methods=['POST'])
-def get_download_options():
+@app.route("/api/get_video", methods=["POST"])
+def get_video():
     data = request.get_json()
-    url = data.get('url')
+    url = data.get("url")
 
     if not url:
-        return jsonify({'error': 'No URL provided'}), 400
+        return jsonify({"error": "URL is required"}), 400
 
     try:
         ydl_opts = {
             'quiet': True,
             'skip_download': True,
             'forcejson': True,
-            'extract_flat': False,
         }
 
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        with YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
-
-        formats = info.get('formats', [])
-        filtered_formats = []
-
-        for fmt in formats:
-            if fmt.get('vcodec') != 'none' and fmt.get('acodec') != 'none':
-                filtered_formats.append({
-                    'quality': fmt.get('format_note') or fmt.get('height'),
-                    'format_id': fmt.get('format_id'),
-                    'ext': fmt.get('ext'),
-                    'filesize': round((fmt.get('filesize', 0) or 0) / 1024 / 1024, 1),
-                    'url': fmt.get('url')
-                })
-
-        # Sort highest to lowest quality
-        filtered_formats = sorted(filtered_formats, key=lambda x: x['filesize'], reverse=True)
-
-        return jsonify({
-            'title': info.get('title'),
-            'thumbnail': info.get('thumbnail'),
-            'formats': filtered_formats
-        })
+            formats = [
+                {
+                    "format_id": f["format_id"],
+                    "quality": f.get("format_note", f["height"]),
+                    "ext": f["ext"],
+                    "filesize": f.get("filesize", 0),
+                    "url": f["url"]
+                }
+                for f in info["formats"]
+                if f.get("vcodec", "none") != "none"
+            ]
+            return jsonify({
+                "title": info.get("title"),
+                "thumbnail": info.get("thumbnail"),
+                "formats": formats
+            })
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
